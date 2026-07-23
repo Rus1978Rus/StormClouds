@@ -16,7 +16,8 @@
 | `CONVEYOR_PACKET_STORMCLOUDS_AI_MARKET_2026-07-23.md` | Пакет прогона #2 — глубокий заход по гипотезе «ИИ везде → реальные деньги». |
 | `RAW_REVIEWS_STORMCLOUDS_APPLICATIONS_2026-07-23.md` | Полные ответы 5 семейств вендоров (Kimi, Grok, Qwen, GPT, Gemini) + финальное сведение по прогону #1. |
 | `RAW_REVIEWS_STORMCLOUDS_AI_MARKET_2026-07-23.md` | Полные ответы 3 семейств (Kimi, GPT, Qwen) + сведение по прогону #2. |
-| `reward-hacking-lab.html` | Макет продукта «Reward Hacking Lab» (восстановлен через WebFetch). |
+| `reward-hacking-lab.html` | Макет продукта «Reward Hacking Lab» (восстановлен через WebFetch, оригинальный артефакт 149ae858, без изменений). |
+| `reward-hacking-lab-executive.html` | **Executive-версия макета** (non-code) — тот же макет + переключатель аудитории «Executive ⇄ Technical». По умолчанию Executive (тучи=поведения, reward=KPI, полезный вывод=бизнес-результат); тумблер Technical переключает ТУ ЖЕ симуляцию обратно в код-язык. Данные одни и те же — меняется только словарь. |
 
 ## Живые артефакты (источник восстановления)
 
@@ -49,6 +50,17 @@
 
 ## Следующий приоритет
 
-1. **Executive-версия макета** (non-code) — в работе.
-2. Методичка фасилитатора на 30 минут.
-3. Лендинг + список ~50 адресатов для 3 пилотов.
+1. **Executive-версия макета** (non-code) — ✅ готова: `reward-hacking-lab-executive.html`
+   (тумблер Executive/Technical на одном датасете).
+2. Методичка фасилитатора на 30 минут (сценарий, вопросы, разбор кейсов
+   Therac-25 / Челленджер / LTCM, дисклеймеры «это метафора, не модель ИИ»,
+   learning objective — под документируемость).
+3. Лендинг «Reward Hacking Lab for AI-literacy workshops» + список ~50
+   адресатов (тренеры / governance-консультанты / L&D) для 3 бесплатных пилотов.
+
+## Проверка
+
+`reward-hacking-lab-executive.html` прогнан в headless Chromium: консольных
+ошибок нет; переключатель аудитории меняет только словарь (числа 93%/6%
+идентичны в обоих режимах); пресет «Governed/Fixed» двигает вывод к 78% и
+переключает вердикт на «Aligned».
