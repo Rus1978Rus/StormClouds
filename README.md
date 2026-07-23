@@ -44,14 +44,13 @@ python3 -m http.server 8000
 ## Structure
 
 ```
-stormclouds/
-├── index.html            # instrument-panel markup
-├── styles.css            # "night storm" theme
-├── js/
-│   ├── interpreter.js    # mini-Python: tokenizer -> parser -> evaluator (StormLang)
-│   └── simulation.js     # clouds, wind, collisions, strikes, rendering
-├── tests/
-│   └── interpreter.test.js
+StormClouds/
+├── index.html          # instrument-panel markup
+├── styles.css          # "night storm" theme
+├── interpreter.js      # mini-Python: tokenizer -> parser -> evaluator (StormLang)
+├── simulation.js       # clouds, wind, collisions, strikes, rendering
+├── interpreter.test.js # tests (run with node)
+├── LICENSE
 └── README.md
 ```
 
@@ -103,7 +102,7 @@ brought that fragment.
 ## Tests
 
 ```bash
-node tests/interpreter.test.js
+node interpreter.test.js
 ```
 
 ## Notes and measurements
