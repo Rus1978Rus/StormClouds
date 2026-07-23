@@ -18,6 +18,7 @@
 | `RAW_REVIEWS_STORMCLOUDS_AI_MARKET_2026-07-23.md` | Полные ответы 3 семейств (Kimi, GPT, Qwen) + сведение по прогону #2. |
 | `reward-hacking-lab.html` | Макет продукта «Reward Hacking Lab» (восстановлен через WebFetch, оригинальный артефакт 149ae858, без изменений). |
 | `reward-hacking-lab-executive.html` | **Executive-версия макета** (non-code) — тот же макет + переключатель аудитории «Executive ⇄ Technical». По умолчанию Executive (тучи=поведения, reward=KPI, полезный вывод=бизнес-результат); тумблер Technical переключает ТУ ЖЕ симуляцию обратно в код-язык. Данные одни и те же — меняется только словарь. |
+| `FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md` | **Методичка фасилитатора на 30 минут** (English, продуктовый артефакт) — learning objectives, поминутный run sheet, скрипт ведущего, разбор Therac-25 / Challenger / LTCM, упражнение-хэндаут, дисклеймеры, шаблон записи-доказательства под комплаенс, варианты по времени, ответы на возражения. Пара к `reward-hacking-lab-executive.html`. |
 
 ## Живые артефакты (источник восстановления)
 
@@ -52,9 +53,10 @@
 
 1. **Executive-версия макета** (non-code) — ✅ готова: `reward-hacking-lab-executive.html`
    (тумблер Executive/Technical на одном датасете).
-2. Методичка фасилитатора на 30 минут (сценарий, вопросы, разбор кейсов
-   Therac-25 / Челленджер / LTCM, дисклеймеры «это метафора, не модель ИИ»,
-   learning objective — под документируемость).
+2. **Методичка фасилитатора на 30 минут** — ✅ готова:
+   `FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md`
+   (сценарий, вопросы, разбор Therac-25 / Challenger / LTCM, дисклеймеры,
+   learning objective + шаблон записи-доказательства под документируемость).
 3. Лендинг «Reward Hacking Lab for AI-literacy workshops» + список ~50
    адресатов (тренеры / governance-консультанты / L&D) для 3 бесплатных пилотов.
 
