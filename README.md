@@ -3,6 +3,14 @@
 **A zero-setup, in-browser lab for watching a metric get *gamed* — plus the
 cloud-and-lightning simulation it grew out of.**
 
+[![Live demo](https://img.shields.io/badge/▶_live_demo-Reward_Hacking_Lab-ffd23f?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/research/reward-hacking-lab-executive.html)
+[![Play the simulation](https://img.shields.io/badge/▶_play-the_simulation-55ceeb?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/)
+&nbsp;
+![License](https://img.shields.io/badge/license-7%25_royalty-3b82f6?style=for-the-badge)
+![Vanilla JS](https://img.shields.io/badge/vanilla_JS-zero_deps-2ea44f?style=for-the-badge)
+
+**▶ Try it live —** [**Reward Hacking Lab**](https://rus1978rus.github.io/StormClouds/research/reward-hacking-lab-executive.html) (the 30-min workshop demo, executive view) · [**StormClouds simulation**](https://rus1978rus.github.io/StormClouds/) (the engine it grew from). No install, runs in the browser.
+
 ![Reward Hacking Lab — the tracked KPI climbs to 93% while the real value it stood for collapses to 6%](assets/reward-hacking-lab.png)
 
 > Optimize a number long enough and it stops measuring the thing you wanted.
