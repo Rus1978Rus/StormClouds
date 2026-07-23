@@ -69,8 +69,6 @@ but it is fully usable in a real session today, zero-install.
   sheet: learning objectives, a minute-by-minute script, debriefs of three real
   cases (Therac-25, Challenger, LTCM), a participant exercise, say-aloud
   disclaimers, and a documentation/evidence template.
-- **`research/`** also holds the market research behind the direction (two
-  external review runs across 8 model families) — see `research/README.md`.
 
 **It is a metaphor, not a model.** The lab illustrates a *principle*; it does not
 predict any specific team's behavior or any AI system's output.
@@ -193,10 +191,9 @@ StormClouds/
 ├── simulation.js           # clouds, wind, collisions, strikes, rendering
 ├── interpreter.test.js     # tests (run with node)
 ├── assets/                 # README screenshots
-├── research/               # facilitator guide, market research, original mock-up
+├── research/               # facilitator guide + original mock-up (reference)
 │   ├── FACILITATOR_GUIDE_*.md              # 30-minute workshop guide
-│   ├── reward-hacking-lab.html             # original single-audience mock-up (reference)
-│   └── …                                   # handoff, transcript, vendor reviews (see research/README.md)
+│   └── reward-hacking-lab.html             # original single-audience mock-up (reference)
 ├── LICENSE
 └── README.md
 ```
@@ -205,20 +202,17 @@ StormClouds/
 
 ## License & how it's licensed for use
 
-**The code:** free to use — including commercially and inside your own projects —
-but if you make money from a product that includes this code, **7% of that
-revenue goes to the author**. See [`LICENSE`](LICENSE). The author keeps full
-ownership and can license it separately. This is a custom royalty license, not a
-standard open-source one.
+See [`LICENSE`](LICENSE) for the full terms. In short:
 
-**The workshop kit** (direction, from the market research in `research/`):
+- **Free** — view, run, modify, teach, and use internally, including for
+  academic and non-commercial purposes.
+- **Commercial delivery** (paid workshops, courses, client engagements) — a
+  simple **fixed annual license**. Contact the author.
+- **Royalty (7%)** — reserved for **white-label / resale / embedding** this in a
+  paid product you distribute.
 
-- **Free** — the public demo, and academic / non-commercial use.
-- **Paid** — running it in commercial workshops, courses, or client engagements.
-  The intended shape is a fixed annual license for trainers and organizations,
-  with royalties reserved for white-label / resale / course-author use. Prices
-  and thresholds are still being validated with pilot facilitators — see
-  `research/` for the reasoning.
+The author keeps full ownership and can license it separately. This is a custom
+license, not a standard open-source one.
 
 ---
 
@@ -226,8 +220,7 @@ standard open-source one.
 
 The simulation is done and runnable. The Reward Hacking Lab is in **packaging and
 validation** — the executive lab and facilitator guide are ready to run; the next
-steps are a landing page and three free pilot sessions with corporate trainers to
-confirm willingness to pay.
+step is putting it in front of facilitators for pilot sessions.
 
 Built on the Foundation Layer pattern **FO-089** (an instrument measures a
 *proxy*, never the thing itself). A standalone educational project — it lives

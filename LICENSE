@@ -1,36 +1,50 @@
-StormClouds License (Royalty License)
+StormClouds License
 Copyright (c) 2026 Ruslan Malyavsky. All rights reserved.
 
 This is NOT a standard open-source license. Please read it before using this
-software.
+software. "The Software" means StormClouds and the Reward Hacking Lab in this
+repository, including code, text, and the facilitator guide.
 
 1. FREE USE
-   You may view, download, run, copy, modify, and share this software and its
-   source code — for personal, educational, and commercial purposes, including
-   inside your own projects — subject to the terms below.
+   You may view, download, run, copy, modify, share, and use The Software for
+   free — for personal, educational, academic, non-commercial, and internal
+   business use. "Internal use" includes running the Reward Hacking Lab in your
+   own team's or organization's training, at no charge, with no obligation.
 
-2. REVENUE SHARE (7%)
-   If you earn revenue from any product, service, application, or other work
-   that includes, embeds, or is derived from this software (in whole or in
-   part), you owe the author a royalty equal to 7% (seven percent) of that
-   revenue. This obligation applies for as long as your work includes any part
-   of this software.
+2. COMMERCIAL DELIVERY — FIXED LICENSE
+   If you deliver PAID training with The Software — for example paid workshops,
+   courses, or client engagements where the Reward Hacking Lab or facilitator
+   guide is part of what you sell or run for a fee — you need a commercial
+   license from the author. The intended form is a simple FIXED annual license
+   (a flat fee, no revenue reporting), with a free academic/non-commercial tier
+   preserved. Contact the author to arrange it (Section 5).
 
-3. ATTRIBUTION
-   You must keep this license file and the copyright notice above in all copies
-   or substantial portions of the software.
+3. ROYALTY (7%) — WHITE-LABEL / RESALE / EMBEDDING
+   If you WHITE-LABEL, RESELL, or EMBED The Software (in whole or in part) inside
+   a product, service, or application that you distribute or sell to others, you
+   owe the author a royalty of 7% (seven percent) of the revenue attributable to
+   that product. This royalty path is for redistribution and resale — not for
+   ordinary paid delivery under Section 2.
 
-4. PAYMENT AND OTHER TERMS
-   To report usage, arrange royalty payment, or negotiate different terms (for
-   example, a one-time buyout or a reduced rate), contact the author through
-   https://github.com/Rus1978Rus .
+4. ATTRIBUTION
+   Keep this license file and the copyright notice above in all copies or
+   substantial portions of The Software.
 
-5. OWNERSHIP
-   The author retains full ownership of this software and may license it to
-   others under different terms, including fully commercial terms, at any time.
-   Nothing in this license limits the author's own rights.
+5. PAYMENT, CONTACT, AND OTHER TERMS
+   To arrange a commercial license, report usage, pay a royalty, or negotiate
+   different terms (for example a one-time buyout or a reduced rate), contact the
+   author:
+     - GitHub:   https://github.com/Rus1978Rus
+     - Email:    malyavsky1@gmail.com
+   When terms are unclear for your case, ask — the default answer for genuine
+   educational and internal use is "yes, free."
 
-6. NO WARRANTY
-   The software is provided "AS IS", without warranty of any kind, express or
+6. OWNERSHIP
+   The author retains full ownership of The Software and may license it to others
+   under different terms, including fully commercial terms, at any time. Nothing
+   in this license limits the author's own rights.
+
+7. NO WARRANTY
+   The Software is provided "AS IS", without warranty of any kind, express or
    implied. In no event shall the author be liable for any claim, damages, or
-   other liability arising from the software or the use of it.
+   other liability arising from The Software or the use of it.

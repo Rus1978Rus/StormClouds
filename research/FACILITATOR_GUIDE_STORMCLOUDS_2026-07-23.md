@@ -9,8 +9,9 @@ browser, zero install — run it in **Executive** mode for this session.
 - **Audience:** executives, managers, product/ops leaders, L&D, AI-governance
 - **Format:** one facilitator, one screen, 4–30 participants, ~30 minutes
 - **No code required.** Nobody in the room needs to read or write software.
-- **License:** free to teach and to run internally; a paid commercial license
-  (public/paid workshops, courses, client engagements) carries a 7% royalty.
+- **License:** free to teach and to run internally. Paid delivery (public/paid
+  workshops, courses, client engagements) uses a simple fixed annual license;
+  a 7% royalty applies only to white-label / resale. See repository `LICENSE`.
   Built on the Foundation Layer pattern **FO-089** (an instrument measures a
   *proxy*, never the thing itself — Goodhart's law).
 
@@ -226,5 +227,5 @@ Reward Hacking Lab is a StormClouds product. The underlying pattern is
 **FO-089 · INSTRUMENT_MEASURES_PROXY** from the author's Foundation Layer;
 the "you only get it when you watch it" premise is **FO-088**. Real cases are
 drawn from public record and framed for teaching. Free to teach and run
-internally; paid/commercial delivery carries a 7% royalty (see repository
-`LICENSE`).
+internally; paid delivery uses a simple fixed annual license (7% royalty only
+for white-label / resale). See repository `LICENSE`.

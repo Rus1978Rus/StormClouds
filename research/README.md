@@ -1,72 +1,26 @@
-# research/ — StormClouds: миграция контекста и продуктовые материалы
+# research/ — StormClouds product materials
 
-Эта папка сохраняет в git всё, что раньше жило только в чате и в опубликованных
-артефактах claude.ai (они привязаны к сессии и эфемерны). Собрано из миграционного
-пакета `StormCloudshandoff.zip` в новой сессии, открытой напрямую на
-`Rus1978Rus/StormClouds` (у неё есть доступ на запись — прошлая сессия была заперта
-на чужой репозиторий и писать в StormClouds не могла).
+Supporting materials for the **Reward Hacking Lab** (the site home, `../index.html`)
+and the StormClouds simulation (`../simulation.html`).
 
-## Что здесь
+## What's here
 
-| Файл | Что это |
-|------|---------|
-| `HANDOFF_STORMCLOUDS_2026-07-23.md` | Миграционный пакет: что такое StormClouds, итог двух конвейерных прогонов, продуктовый курс, первые действия. |
-| `TRANSCRIPT_LAST10_STORMCLOUDS_2026-07-23.md` | Последние 10 ходов живой переписки (дословные реплики автора, сжатые — ассистента). |
-| `CONVEYOR_PACKET_STORMCLOUDS_APPLICATIONS_2026-07-23.md` | Пакет прогона #1 — генерация и ранжирование ПРИМЕНЕНИЙ. |
-| `CONVEYOR_PACKET_STORMCLOUDS_AI_MARKET_2026-07-23.md` | Пакет прогона #2 — глубокий заход по гипотезе «ИИ везде → реальные деньги». |
-| `RAW_REVIEWS_STORMCLOUDS_APPLICATIONS_2026-07-23.md` | Полные ответы 5 семейств вендоров (Kimi, Grok, Qwen, GPT, Gemini) + финальное сведение по прогону #1. |
-| `RAW_REVIEWS_STORMCLOUDS_AI_MARKET_2026-07-23.md` | Полные ответы 3 семейств (Kimi, GPT, Qwen) + сведение по прогону #2. |
-| `reward-hacking-lab.html` | Макет продукта «Reward Hacking Lab» (восстановлен через WebFetch, оригинальный артефакт 149ae858, без изменений). |
-| `FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md` | **Методичка фасилитатора на 30 минут** (English, продуктовый артефакт) — learning objectives, поминутный run sheet, скрипт ведущего, разбор Therac-25 / Challenger / LTCM, упражнение-хэндаут, дисклеймеры, шаблон записи-доказательства под комплаенс, варианты по времени, ответы на возражения. Пара к главной странице сайта (`../index.html`). |
+| File | What it is |
+|------|------------|
+| `FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md` | **30-minute facilitator guide** — learning objectives, a minute-by-minute run sheet and script, debriefs of three real cases (Therac-25, Challenger, LTCM), a participant exercise, say-aloud disclaimers, a documentation/evidence template, timing variants, and objection prep. Pairs with the site home. |
+| `reward-hacking-lab.html` | The original single-audience mock-up of the lab (kept as a reference snapshot). |
 
-> **Executive-версия макета** переехала в корень репозитория как **`../index.html`** —
-> это теперь ГЛАВНАЯ страница сайта (по умолчанию Executive, тумблер Technical
-> переключает ТУ ЖЕ симуляцию обратно в код-язык; данные одни и те же — меняется
-> только словарь). Игра-движок — в корне как `../simulation.html`.
+The dual-audience Reward Hacking Lab itself lives at the repo root as
+**`../index.html`** (Executive by default, with a Technical toggle over the same
+data). The code simulation it grew from is **`../simulation.html`**.
 
-## Живые артефакты (источник восстановления)
+## The idea
 
-Оба артефакта были восстановлены через WebFetch по ссылкам из HANDOFF §2:
+StormClouds makes **Goodhart's law / reward hacking** watchable: optimize a
+proxy metric and it stops measuring what you wanted. The lab shows the same run
+under two vocabularies (a KPI vs. real value, or survival vs. useful output) —
+the numbers don't change between them, only the words. See the facilitator guide
+for how to run it as a 30-minute session.
 
-- **Игра StormClouds** — https://claude.ai/code/artifact/57a934e6-6b01-485e-a895-fa1cb39aec7d
-  Однофайловая сборка игры. Её каноническая **многофайловая** версия уже лежит в
-  корне репозитория: `index.html`, `styles.css`, `interpreter.js`, `simulation.js`,
-  `interpreter.test.js`. Поэтому отдельную копию сюда не кладём — дубликат.
-- **Reward Hacking Lab (макет)** — https://claude.ai/code/artifact/149ae858-a9c9-40ad-bd90-1f397b1c4b7a
-  Восстановлен в `reward-hacking-lab.html` (это НЕ игра, а макет-превью продукта:
-  два расходящихся графика «выживаемость» vs «полезный вывод» + методичка фасилитатора).
-
-## Продуктовый курс (кратко — детали в HANDOFF §4)
-
-Два внешних прогона (8 ответов вендоров суммарно) сошлись:
-
-- Сфера — **обучение/демо**, не игра/IDE/генератор кода. Голый симулятор ≈ ноль
-  коммерческой ценности; вся ценность в **обёртке**.
-- Ядро продукта — **демо-кит «reward hacking / метрики опасны»** (закон Гудхарта / FO-089).
-- Покупатель — **корп. L&D / тренеры «ИИ-риски для руководителей» / AI-governance**,
-  перепродающие обучение в корпорации. НЕ ML-инженеры, НЕ академ AI-safety.
-- Форма — готовый **facilitator воркшоп-кит** (встраиваемое демо + 30-мин методичка +
-  слайды-кейсы + коммерч. лицензия).
-- Нужна **non-code «executive» версия** (Python отпугивает руководителей):
-  тучи = поведения, reward = KPI, полезный вывод = бизнес-результат.
-- Лицензия: free демо/академ; ~$100–500/год тренеру; ~$1 500–3 000/год корпорации;
-  7% роялти — только white-label/resale/курс-авторам (для B2B фикс-лицензия).
-- Первый шаг — не код, а **3 бесплатных пилота** с корп. тренерами для валидации оплаты.
-
-## Следующий приоритет
-
-1. **Executive-версия макета** (non-code) — ✅ готова и стала ГЛАВНОЙ страницей
-   сайта: `../index.html` (тумблер Executive/Technical на одном датасете).
-2. **Методичка фасилитатора на 30 минут** — ✅ готова:
-   `FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md`
-   (сценарий, вопросы, разбор Therac-25 / Challenger / LTCM, дисклеймеры,
-   learning objective + шаблон записи-доказательства под документируемость).
-3. Лендинг «Reward Hacking Lab for AI-literacy workshops» + список ~50
-   адресатов (тренеры / governance-консультанты / L&D) для 3 бесплатных пилотов.
-
-## Проверка
-
-Главная страница (`../index.html`) прогнана в headless Chromium: консольных
-ошибок нет; переключатель аудитории меняет только словарь (числа 93%/6%
-идентичны в обоих режимах); пресет «Governed/Fixed» двигает вывод к 78% и
-переключает вердикт на «Aligned».
+_Internal notes, market research, and licensing details are kept out of this
+public folder._
