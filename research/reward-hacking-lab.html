@@ -1,0 +1,393 @@
+<title>StormClouds · Reward Hacking Lab — preview</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg0:#050a14; --bg1:#0b1524; --panel:#0c1626; --panel-2:#0e1a2e;
+    --ink:#eaf1fb; --muted:#93a4bf; --faint:#61748f;
+    --line:rgba(140,170,210,.14); --line-2:rgba(140,170,210,.09);
+    --bolt:#ffd23f;
+    --surv:#c07d1c; --surv-lit:#e7a83d;      /* series: the metric */
+    --use:#2496b8;  --use-lit:#55ceeb;        /* series: the goal   */
+    --good:#7ee0a6; --warn:#ffca4a;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--sans); color:var(--ink);
+    background:
+      radial-gradient(1100px 640px at 82% -12%, #1a2b46 0%, rgba(26,43,70,0) 60%),
+      radial-gradient(820px 560px at 8% 4%, #0f1d33 0%, rgba(15,29,51,0) 55%),
+      linear-gradient(180deg,var(--bg1) 0%,var(--bg0) 100%);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    min-height:100vh;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:26px 22px 40px; display:flex; flex-direction:column; gap:22px}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); display:inline-flex; align-items:center; gap:8px;
+  }
+  .eyebrow .tag{
+    color:#0a0f18; background:var(--bolt); border-radius:4px; padding:1px 6px;
+    font-weight:700; letter-spacing:.08em;
+  }
+  h1{
+    margin:.35em 0 .15em; font-size:clamp(28px,4.6vw,46px); line-height:1.02;
+    letter-spacing:-.015em; text-wrap:balance; font-weight:800;
+  }
+  h1 .zap{color:var(--bolt); text-shadow:0 0 22px rgba(255,210,63,.5)}
+  .lede{margin:0; color:var(--muted); font-size:15.5px; line-height:1.55; max-width:70ch}
+
+  /* ---- layout ---- */
+  main{display:grid; grid-template-columns:minmax(0,1.62fr) minmax(280px,1fr); gap:18px}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+    border:1px solid var(--line); border-radius:16px;
+  }
+  .lab{padding:18px 18px 20px; display:flex; flex-direction:column; gap:16px}
+
+  /* ---- controls ---- */
+  .controls{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .seg{display:inline-flex; background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:10px; padding:3px}
+  .seg button{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.02em;
+    color:var(--muted); background:transparent; border:0; border-radius:7px;
+    padding:8px 14px; cursor:pointer; transition:.15s;
+  }
+  .seg button.on{background:rgba(255,210,63,.16); color:#ffe6a0; box-shadow:inset 0 0 0 1px rgba(255,210,63,.4)}
+  .seg button:not(.on):hover{color:var(--ink)}
+  .rewslider{display:flex; align-items:center; gap:10px; flex:1; min-width:210px}
+  .rewslider label{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+  input[type=range]{flex:1; min-width:90px; accent-color:var(--use-lit); cursor:pointer}
+  .run{
+    font-family:var(--mono); font-size:12.5px; color:var(--ink);
+    background:rgba(255,255,255,.05); border:1px solid var(--line); border-radius:9px;
+    padding:8px 13px; cursor:pointer; transition:.15s; white-space:nowrap;
+  }
+  .run:hover{background:rgba(255,255,255,.1); border-color:rgba(160,190,230,.4)}
+  button:focus-visible, input:focus-visible{outline:2px solid var(--bolt); outline-offset:2px}
+
+  /* ---- verdict ---- */
+  .verdict{
+    display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px;
+    font-size:14px; line-height:1.4; border:1px solid var(--line); background:var(--panel-2);
+    transition:.25s;
+  }
+  .verdict .ic{font-size:18px; flex:0 0 auto}
+  .verdict b{font-weight:700}
+  .verdict.warn{border-color:rgba(255,202,74,.45); background:rgba(255,202,74,.07)}
+  .verdict.warn b{color:var(--warn)}
+  .verdict.good{border-color:rgba(126,224,166,.4); background:rgba(126,224,166,.06)}
+  .verdict.good b{color:var(--good)}
+  .verdict.mid{border-color:rgba(140,170,210,.28)}
+
+  /* ---- chart ---- */
+  .chart{margin:0; position:relative}
+  .chart svg{display:block; width:100%; height:auto}
+  .axis-t{font-family:var(--mono); font-size:11px; fill:var(--faint)}
+  .grid{stroke:var(--line-2)}
+  .axis{stroke:var(--line)}
+  .lbl-name{font-family:var(--mono); font-size:11.5px; fill:var(--ink)}
+  .lbl-sub{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; fill:var(--faint); text-transform:uppercase}
+  .cross{stroke:rgba(180,200,230,.35); stroke-dasharray:3 4}
+  .tip{
+    position:absolute; pointer-events:none; opacity:0; transform:translate(-50%,-120%);
+    background:rgba(8,14,26,.94); border:1px solid var(--line); border-radius:9px;
+    padding:8px 10px; font-family:var(--mono); font-size:11.5px; white-space:nowrap;
+    box-shadow:0 8px 22px rgba(0,0,0,.5); transition:opacity .12s; z-index:4; min-width:150px;
+  }
+  .tip .row{display:flex; align-items:center; gap:7px; justify-content:space-between}
+  .tip .row+.row{margin-top:3px}
+  .tip .dot{width:8px;height:8px;border-radius:2px;display:inline-block}
+  .tip .k{color:var(--muted)} .tip .v{font-variant-numeric:tabular-nums; color:var(--ink)}
+  .tip .step{color:var(--faint); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px}
+
+  /* ---- stat tiles ---- */
+  .tiles{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .tile{border:1px solid var(--line); border-radius:12px; padding:13px 14px; background:var(--panel)}
+  .tile .cap{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--muted)}
+  .tile .cap .dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+  .tile .num{font-family:var(--mono); font-size:38px; font-weight:700; line-height:1.05; margin-top:6px; font-variant-numeric:tabular-nums}
+  .tile .sub{font-size:12px; color:var(--faint); margin-top:2px}
+
+  /* ---- guide ---- */
+  .guide{padding:18px; display:flex; flex-direction:column; gap:14px}
+  .guide h2{margin:0; font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--bolt); display:flex; align-items:center; gap:8px}
+  .guide h2::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--bolt); box-shadow:0 0 8px var(--bolt)}
+  .guide h3{margin:6px 0 0; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; counter-reset:s}
+  .steps li{position:relative; padding-left:30px; font-size:13.5px; line-height:1.45; color:var(--ink)}
+  .steps li::before{
+    counter-increment:s; content:counter(s); position:absolute; left:0; top:-1px;
+    width:20px; height:20px; border-radius:6px; background:rgba(255,210,63,.14);
+    color:#ffe6a0; font-family:var(--mono); font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,210,63,.3);
+  }
+  .ask{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px}
+  .ask li{font-size:13px; line-height:1.45; color:var(--muted)}
+  .ask li b{color:var(--ink); font-weight:600}
+  .tieins{display:flex; flex-wrap:wrap; gap:6px}
+  .tieins span{font-family:var(--mono); font-size:11px; color:var(--use-lit); background:rgba(36,150,184,.12); border:1px solid rgba(36,150,184,.3); border-radius:6px; padding:3px 8px}
+  .cases{display:flex; flex-direction:column; gap:9px}
+  .case{font-size:12.5px; line-height:1.45; color:var(--muted)}
+  .case b{color:var(--ink); font-weight:600}
+  .law{
+    font-size:12.5px; line-height:1.5; color:var(--ink);
+    border-left:2px solid var(--use); padding:5px 0 5px 12px; margin-top:2px;
+    background:linear-gradient(90deg, rgba(36,150,184,.07), transparent);
+  }
+  .law b{color:var(--use-lit)}
+  .law .src{color:var(--faint); font-family:var(--mono); font-size:10.5px}
+  .guide .meta{margin-top:2px; padding-top:12px; border-top:1px dashed var(--line); font-size:12px; color:var(--faint); line-height:1.5}
+  .guide .meta b{color:var(--muted); font-weight:600}
+
+  footer{color:var(--faint); font-size:12px; line-height:1.5; border-top:1px solid var(--line); padding-top:14px}
+  footer b{color:var(--muted)}
+
+  @media (max-width:860px){
+    main{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow"><span class="tag">MVP PREVIEW</span> StormClouds · Reward Hacking Lab</span>
+    <h1>Watch a metric get <span class="zap">gamed.</span></h1>
+    <p class="lede">Slide the reward. The metric the system optimizes — “did the code survive?” — stays sky‑high either way. But the thing you actually wanted — “did it produce useful output?” — collapses the moment the reward is naive. That gap <em>is</em> reward hacking. Zero setup, right in the browser.</p>
+  </header>
+
+  <main>
+    <!-- LEFT: the lab -->
+    <section class="card lab">
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Reward preset">
+          <button data-preset="0" class="on" type="button">Naive metric</button>
+          <button data-preset="1" type="button">Fixed metric</button>
+        </div>
+        <div class="rewslider">
+          <label for="rw">Reward values output</label>
+          <input id="rw" type="range" min="0" max="100" value="0" aria-label="How much the reward values useful output">
+        </div>
+        <button class="run" id="run" type="button">▶ Run 100 strikes</button>
+      </div>
+
+      <div class="verdict warn" id="verdict">
+        <span class="ic">⚠</span>
+        <span id="verdict-text"><b>Metric gamed.</b> The system keeps “survival” near 93% — while useful output crashes to 6%. It optimized the number, not the intent.</span>
+      </div>
+
+      <figure class="chart">
+        <svg viewBox="0 0 720 380" role="img" aria-label="Two lines over 20 strikes: survival stays high; useful output depends on the reward.">
+          <g id="grid"></g>
+          <g id="axes"></g>
+          <line id="cross" class="cross" x1="0" y1="24" x2="0" y2="324" style="opacity:0"></line>
+          <polyline id="lineSurv" fill="none" stroke="var(--surv)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" points=""></polyline>
+          <polyline id="lineUse" fill="none" stroke="var(--use)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" points=""></polyline>
+          <circle id="dotSurv" r="4.5" fill="var(--surv-lit)"></circle>
+          <circle id="dotUse" r="4.5" fill="var(--use-lit)"></circle>
+          <g id="endlabels"></g>
+        </svg>
+        <div class="tip" id="tip"></div>
+      </figure>
+
+      <div class="tiles">
+        <div class="tile">
+          <div class="cap"><span class="dot" style="background:var(--surv-lit)"></span> Survival — lines that ran</div>
+          <div class="num" id="nSurv" style="color:var(--surv-lit)">93%</div>
+          <div class="sub">the metric being optimized</div>
+        </div>
+        <div class="tile">
+          <div class="cap"><span class="dot" style="background:var(--use-lit)"></span> Useful output — runs that printed</div>
+          <div class="num" id="nUse" style="color:var(--use-lit)">6%</div>
+          <div class="sub">what you actually wanted</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: facilitator guide -->
+    <aside class="card guide">
+      <h2>Facilitator guide</h2>
+      <ol class="steps">
+        <li>Open on the projector. Leave it on <b>Naive metric</b>. Point out: survival climbs, everyone looks happy.</li>
+        <li>Now show the cyan line — <b>useful output cratered</b>. “The system got great at the score and useless at the job.”</li>
+        <li>Drag to <b>Fixed metric</b>. Output recovers. “Same system — we only changed what we rewarded.”</li>
+      </ol>
+
+      <h3>Ask the room</h3>
+      <ul class="ask">
+        <li><b>Where does your team’s metric reward survival over value?</b></li>
+        <li>What would the cyan line be in <b>your</b> world?</li>
+      </ul>
+
+      <h3>Tie it to your world</h3>
+      <div class="tieins">
+        <span>OKRs &amp; KPIs</span><span>ML reward functions</span><span>support “tickets closed”</span><span>sales “calls made”</span>
+      </div>
+
+      <h3>Real cases — it isn’t a toy</h3>
+      <div class="cases">
+        <div class="case"><b>Therac‑25.</b> Measured “passed the review” — wanted “safe.” The review was a ritual; the machine irradiated patients anyway.</div>
+        <div class="case"><b>Challenger.</b> Measured “flights without a failure” — wanted “a sound design.” The O‑ring risk got normalized until it wasn’t.</div>
+        <div class="case"><b>LTCM.</b> Optimized the average return — ignored the variance. Variance is what blew it up: $4.6&nbsp;billion.</div>
+      </div>
+
+      <div class="law"><b>The law behind it:</b> an instrument measures a <em>proxy</em> — never the thing itself. <span class="src">Foundation Layer · FO‑089</span></div>
+
+      <div class="meta">
+        <b>What this is:</b> a zero‑setup, in‑browser lab that turns Goodhart’s law into something a room can watch happen. You can read it in any textbook — you only <em>get</em> it when you watch it. <br>
+        <b>Behind it:</b> the Foundation Layer — 100 structural patterns across 34 domains, 53 documented cases. <br>
+        <b>License:</b> free to teach; 7% royalty on paid workshops &amp; courses.
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <b>Preview note.</b> This is a mock‑up of the proposed product, drawn from StormClouds’ own measured runs (naive vs. fixed fitness: useful‑output share ~24% → ~7%, output/strike ~1.2 → ~0.7). The shipped version plots a live run with fixed seeds so the effect is identical every time.
+  </footer>
+</div>
+
+<script>
+  // ---- data: our real story, two presets, 20 strikes ----
+  const N = 20;
+  const naive = {
+    surv: [52,60,67,72,77,80,83,85,87,88,90,90,91,91,92,92,92,93,93,93],
+    use:  [38,35,31,27,23,20,17,15,13,11,10, 9, 8, 8, 7, 7, 7, 6, 6, 6],
+  };
+  const fixed = {
+    surv: [52,60,66,71,75,79,82,84,86,87,88,89,90,90,91,91,92,92,92,92],
+    use:  [38,43,48,53,57,61,64,67,69,71,72,74,75,76,77,77,78,78,78,78],
+  };
+  const lerp = (a,b,t)=>a+(b-a)*t;
+  const dataAt = (t)=>({
+    surv: naive.surv.map((v,i)=>lerp(v,fixed.surv[i],t)),
+    use:  naive.use .map((v,i)=>lerp(v,fixed.use [i],t)),
+  });
+
+  // ---- geometry ----
+  const PADL=48, PADR=132, PADT=24, PADB=56, W=720, H=380;
+  const PW=W-PADL-PADR, PH=H-PADT-PADB;
+  const X=i=>PADL+(i/(N-1))*PW;
+  const Y=v=>PADT+(1-v/100)*PH;
+
+  // ---- static grid + axes ----
+  const grid=document.getElementById('grid'), axes=document.getElementById('axes');
+  let g='';
+  for(let v=0; v<=100; v+=25){ const y=Y(v); g+=`<line class="grid" x1="${PADL}" y1="${y}" x2="${PADL+PW}" y2="${y}"/>`;
+    g+=`<text class="axis-t" x="${PADL-9}" y="${y+4}" text-anchor="end">${v}%</text>`; }
+  grid.innerHTML=g;
+  let a=`<line class="axis" x1="${PADL}" y1="${PADT}" x2="${PADL}" y2="${PADT+PH}"/>`;
+  a+=`<line class="axis" x1="${PADL}" y1="${PADT+PH}" x2="${PADL+PW}" y2="${PADT+PH}"/>`;
+  for(let i=0;i<N;i+=5){ a+=`<text class="axis-t" x="${X(i)}" y="${PADT+PH+20}" text-anchor="middle">${i}</text>`; }
+  a+=`<text class="axis-t" x="${PADL+PW/2}" y="${H-6}" text-anchor="middle" style="letter-spacing:.1em">STRIKES  (evolution progressing →)</text>`;
+  axes.innerHTML=a;
+
+  const lineS=document.getElementById('lineSurv'), lineU=document.getElementById('lineUse');
+  const dotS=document.getElementById('dotSurv'), dotU=document.getElementById('dotUse');
+  const endl=document.getElementById('endlabels');
+  const verdict=document.getElementById('verdict'), vtext=document.getElementById('verdict-text');
+  const nSurv=document.getElementById('nSurv'), nUse=document.getElementById('nUse');
+
+  let cur=dataAt(0), progress=1, t=0;
+
+  function pts(arr, upto){
+    let s='';
+    for(let i=0;i<N;i++){ if(i/(N-1)>upto+1e-9) break; s+=`${X(i).toFixed(1)},${Y(arr[i]).toFixed(1)} `; }
+    return s.trim();
+  }
+  function render(){
+    lineS.setAttribute('points', pts(cur.surv, progress));
+    lineU.setAttribute('points', pts(cur.use, progress));
+    const li=Math.max(0, Math.min(N-1, Math.round(progress*(N-1))));
+    dotS.setAttribute('cx',X(li)); dotS.setAttribute('cy',Y(cur.surv[li]));
+    dotU.setAttribute('cx',X(li)); dotU.setAttribute('cy',Y(cur.use[li]));
+    // end labels
+    const sv=cur.surv[N-1], uv=cur.use[N-1];
+    endl.innerHTML =
+      `<circle cx="${X(N-1)+14}" cy="${Y(sv)}" r="3.5" fill="var(--surv-lit)"/>`+
+      `<text class="lbl-name" x="${X(N-1)+22}" y="${Y(sv)-3}">Survival</text>`+
+      `<text class="lbl-sub" x="${X(N-1)+22}" y="${Y(sv)+9}">the metric</text>`+
+      `<circle cx="${X(N-1)+14}" cy="${Y(uv)}" r="3.5" fill="var(--use-lit)"/>`+
+      `<text class="lbl-name" x="${X(N-1)+22}" y="${Y(uv)-3}">Useful output</text>`+
+      `<text class="lbl-sub" x="${X(N-1)+22}" y="${Y(uv)+9}">the goal</text>`;
+    nSurv.textContent=Math.round(sv)+'%';
+    nUse.textContent=Math.round(uv)+'%';
+    // verdict
+    verdict.classList.remove('warn','good','mid');
+    if(t<0.34){ verdict.classList.add('warn'); verdict.querySelector('.ic').textContent='⚠';
+      vtext.innerHTML=`<b>Metric gamed.</b> The system keeps “survival” near ${Math.round(sv)}% — while useful output sits at just ${Math.round(uv)}%. It optimized the number, not the intent.`; }
+    else if(t>0.66){ verdict.classList.add('good'); verdict.querySelector('.ic').textContent='✓';
+      vtext.innerHTML=`<b>Aligned.</b> Rewarding useful output pulled the goal back to ${Math.round(uv)}% — with survival still ${Math.round(sv)}%. Same system, better reward.`; }
+    else { verdict.classList.add('mid'); verdict.querySelector('.ic').textContent='◐';
+      vtext.innerHTML=`<b>Partly gamed.</b> As the reward starts to value output, the goal climbs (${Math.round(uv)}%) — survival barely moves (${Math.round(sv)}%).`; }
+  }
+
+  // ---- animate t (preset toggle / slider release) ----
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let raf=0;
+  function animateTo(target){
+    cancelAnimationFrame(raf);
+    if(reduce){ t=target; cur=dataAt(t); render(); syncControls(); return; }
+    const t0=t, start=performance.now(), dur=520;
+    (function step(now){
+      const k=Math.min(1,(now-start)/dur), e=1-Math.pow(1-k,3);
+      t=t0+(target-t0)*e; cur=dataAt(t); render(); syncControls();
+      if(k<1) raf=requestAnimationFrame(step);
+    })(start);
+  }
+  function setT(v){ t=v; cur=dataAt(t); render(); syncControls(); }
+
+  function syncControls(){
+    document.getElementById('rw').value=Math.round(t*100);
+    document.querySelectorAll('.seg button').forEach(b=>{
+      const p=+b.dataset.preset; b.classList.toggle('on', Math.abs(t-p)<0.001);
+    });
+  }
+
+  // ---- run-100 draw animation ----
+  function runDraw(){
+    cancelAnimationFrame(raf);
+    if(reduce){ progress=1; render(); return; }
+    progress=0; const start=performance.now(), dur=1400;
+    (function step(now){
+      progress=Math.min(1,(now-start)/dur); render();
+      if(progress<1) raf=requestAnimationFrame(step);
+    })(start);
+  }
+
+  // ---- events ----
+  document.querySelectorAll('.seg button').forEach(b=>{
+    b.addEventListener('click',()=>animateTo(+b.dataset.preset));
+  });
+  document.getElementById('rw').addEventListener('input',e=>{ progress=1; setT(e.target.value/100); });
+  document.getElementById('run').addEventListener('click',runDraw);
+
+  // ---- hover crosshair + tooltip ----
+  const svg=document.querySelector('.chart svg'), tip=document.getElementById('tip'), cross=document.getElementById('cross'), chart=document.querySelector('.chart');
+  function onMove(ev){
+    const r=svg.getBoundingClientRect();
+    const px=(ev.clientX-r.left)/r.width*W;
+    if(px<PADL||px>PADL+PW){ onLeave(); return; }
+    const i=Math.max(0,Math.min(N-1,Math.round((px-PADL)/PW*(N-1))));
+    const xx=X(i);
+    cross.setAttribute('x1',xx); cross.setAttribute('x2',xx); cross.style.opacity=1;
+    const sv=Math.round(cur.surv[i]), uv=Math.round(cur.use[i]);
+    tip.innerHTML=`<div class="step">strike ${i}</div>`+
+      `<div class="row"><span class="k"><span class="dot" style="background:var(--surv-lit)"></span> Survival</span><span class="v">${sv}%</span></div>`+
+      `<div class="row"><span class="k"><span class="dot" style="background:var(--use-lit)"></span> Useful output</span><span class="v">${uv}%</span></div>`;
+    const cr=chart.getBoundingClientRect();
+    tip.style.left=((xx/W)*cr.width)+'px';
+    tip.style.top=((Y(Math.max(cur.surv[i],cur.use[i]))/H)*cr.height)+'px';
+    tip.style.opacity=1;
+  }
+  function onLeave(){ tip.style.opacity=0; cross.style.opacity=0; }
+  svg.addEventListener('mousemove',onMove);
+  svg.addEventListener('mouseleave',onLeave);
+
+  render(); syncControls();
+</script>
