@@ -6,6 +6,19 @@
   <title>StormClouds — a code storm</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='88'%3E%E2%9B%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .howto{margin:0; border:1px solid rgba(140,170,210,.18); border-radius:12px; background:rgba(255,210,63,.05)}
+    .howto>summary{cursor:pointer; list-style:none; padding:11px 14px; font-family:var(--mono,ui-monospace,Menlo,monospace); font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--bolt,#ffd23f)}
+    .howto>summary::-webkit-details-marker{display:none}
+    .howto>summary::after{content:"▾ show"; float:right; opacity:.7; letter-spacing:.05em}
+    .howto[open]>summary::after{content:"▴ hide"}
+    .howto-body{padding:0 14px 14px; display:flex; flex-direction:column; gap:9px}
+    .howto-body p{margin:0; font-size:13px; line-height:1.5; color:#c7d4e8}
+    .howto-body b{color:#eaf1fb}
+    .howto-body a{color:var(--bolt,#ffd23f)}
+    .howto .good{color:#7ee0a6}
+    .howto .bad{color:#ff9090}
+  </style>
 </head>
 <body>
   <div class="app">
@@ -37,6 +50,16 @@
       <div class="slider"><label for="spd">Speed</label><input type="range" id="spd" min="0.2" max="3" step="0.1" value="1"></div>
       <span class="hint">click the sky for a new cloud · click a cloud to re-roll its fragment</span>
     </div>
+
+    <details class="howto" open>
+      <summary>ℹ️ How to play — goal &amp; rules</summary>
+      <div class="howto-body">
+        <p><b>The goal.</b> Turn a storm of random code fragments into a working program. Every <b>⚡ strike</b> runs whatever the clouds have collected — you're aiming for as many <span class="good">green output lines</span> (real, useful output) as possible, and as few <span class="bad">red errors</span>. There's no score and nothing to lose: it's a sandbox — watch order appear out of chaos, and nudge it along.</p>
+        <p><b>Nudge it.</b> <b>⚡ Strike</b> = run what's collected now · <b>🌬 Gust</b>, <b>＋ Cloud</b>, or <b>click the sky</b> = stir up more collisions · <b>click a cloud</b> = change its code.</p>
+        <p><b>Make it grow.</b> <b>🧠 Memory</b> lets variables survive between strikes, so the program builds up · <b>🎯 Coverage</b> guarantees the basic variables exist, so fewer lines error out.</p>
+        <p><b>The twist — the whole point.</b> Turn on <b>🧬 Evolution</b> and watch for a minute. The system starts optimizing “survival”: clouds get great at not-erroring while useful output collapses toward zero. The metric gets <i>gamed</i>. That live effect is exactly what the <a href="index.html">Reward Hacking Lab</a> is built on.</p>
+      </div>
+    </details>
 
     <main>
       <div class="sky" id="sky">
