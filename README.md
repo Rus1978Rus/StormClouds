@@ -3,13 +3,13 @@
 **A zero-setup, in-browser lab for watching a metric get *gamed* — plus the
 cloud-and-lightning simulation it grew out of.**
 
-[![Live demo](https://img.shields.io/badge/▶_live_demo-Reward_Hacking_Lab-ffd23f?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/research/reward-hacking-lab-executive.html)
-[![Play the simulation](https://img.shields.io/badge/▶_play-the_simulation-55ceeb?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/)
+[![Live demo](https://img.shields.io/badge/▶_live_demo-Reward_Hacking_Lab-ffd23f?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/)
+[![Play the simulation](https://img.shields.io/badge/▶_play-the_simulation-55ceeb?style=for-the-badge)](https://rus1978rus.github.io/StormClouds/simulation.html)
 &nbsp;
 ![License](https://img.shields.io/badge/license-7%25_royalty-3b82f6?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/vanilla_JS-zero_deps-2ea44f?style=for-the-badge)
 
-**▶ Try it live —** [**Reward Hacking Lab**](https://rus1978rus.github.io/StormClouds/research/reward-hacking-lab-executive.html) (the 30-min workshop demo, executive view) · [**StormClouds simulation**](https://rus1978rus.github.io/StormClouds/) (the engine it grew from). No install, runs in the browser.
+**▶ Try it live —** [**Reward Hacking Lab**](https://rus1978rus.github.io/StormClouds/) (the 30-min workshop demo, executive view — the site opens here) · [**StormClouds simulation**](https://rus1978rus.github.io/StormClouds/simulation.html) (the engine it grew from). No install, runs in the browser.
 
 ![Reward Hacking Lab — the tracked KPI climbs to 93% while the real value it stood for collapses to 6%](assets/reward-hacking-lab.png)
 
@@ -22,15 +22,15 @@ cloud-and-lightning simulation it grew out of.**
 
 ## Two layers in this repo
 
-1. **StormClouds — the simulation** (`index.html` + JS). A cloud-and-lightning
+1. **The Reward Hacking Lab — the product** (`index.html`, the site home). The
+   effect repackaged as a facilitator-ready teaching module: an executive
+   (non-code) view, a technical view, and a 30-minute workshop guide. This is
+   what the live site opens on, and the layer the product work is aimed at.
+2. **StormClouds — the simulation** (`simulation.html` + JS). A cloud-and-lightning
    toy where fragments of a Python subset collide and are genuinely executed.
    Left to "evolve" under a naive fitness function, the population games the
    metric: it gets great at *surviving* and useless at *printing*. That
    accidental discovery is the whole point below.
-2. **The Reward Hacking Lab — the product** (`research/`). The same effect,
-   repackaged as a facilitator-ready teaching module: an executive (non-code)
-   view, a technical view, and a 30-minute workshop guide. This is the layer the
-   product work is aimed at.
 
 ---
 
@@ -40,10 +40,10 @@ StormClouds is one idea seen from several angles. Pick the entry point that fits
 
 | You want to… | Use | Audience |
 |--------------|-----|----------|
-| **Run a 30-min workshop** on why metrics get gamed | `research/reward-hacking-lab-executive.html` (Executive mode) + `research/FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md` | Executives, managers, PMs, L&D |
+| **Run a 30-min workshop** on why metrics get gamed | `index.html` — the site home (Executive mode) + `research/FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md` | Executives, managers, PMs, L&D |
 | **Show it in an AI-safety / ML talk** | The same lab, flipped to **Technical** with the Audience toggle | ML / technical rooms |
 | **Just see the effect** in 90 seconds, no facilitator | Open the lab, leave it on *Naive KPI*, watch the two lines diverge | Anyone |
-| **Explore the mechanic** hands-on (clouds, evolution, memory) | The raw simulation — `index.html` | Curious / technical |
+| **Explore the mechanic** hands-on (clouds, evolution, memory) | The raw simulation — `simulation.html` | Curious / technical |
 | **Embed or white-label** it inside your own course or platform | The lab is a single self-contained file — see licensing below | Course authors, providers |
 
 The lab's **Audience** toggle is the core move: *the same run* is relabeled
@@ -60,9 +60,9 @@ A preview of the proposed workshop product. It's a mock-up in the sense that the
 two lines are drawn from StormClouds' own measured runs and plotted for clarity —
 but it is fully usable in a real session today, zero-install.
 
-- **`research/reward-hacking-lab-executive.html`** — the shippable, dual-audience
-  lab (Executive default, Technical toggle). Non-code by design: Python on a
-  boardroom screen loses the room.
+- **`index.html`** (the site home) — the shippable, dual-audience lab (Executive
+  default, Technical toggle). Non-code by design: Python on a boardroom screen
+  loses the room.
 - **`research/reward-hacking-lab.html`** — the original single-audience mock-up
   (restored from the published artifact; kept as a reference snapshot).
 - **`research/FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md`** — a 30-minute run
@@ -111,8 +111,8 @@ No build, no dependencies — it's a static page.
 
 ```bash
 # just open the file in a browser
-open index.html        # macOS
-xdg-open index.html    # Linux
+open simulation.html        # macOS
+xdg-open simulation.html    # Linux
 
 # or serve it locally
 python3 -m http.server 8000
@@ -186,16 +186,16 @@ From headless-browser runs (these motivated each toggle):
 
 ```
 StormClouds/
-├── index.html              # the simulation (instrument-panel markup)
-├── styles.css              # "night storm" theme
+├── index.html              # HOME — the Reward Hacking Lab (executive + technical)
+├── simulation.html         # the StormClouds code simulation (the engine)
+├── styles.css              # "night storm" theme (simulation)
 ├── interpreter.js          # mini-Python: tokenizer → parser → evaluator (StormLang)
 ├── simulation.js           # clouds, wind, collisions, strikes, rendering
 ├── interpreter.test.js     # tests (run with node)
 ├── assets/                 # README screenshots
-├── research/               # the product: the Lab, the facilitator guide, market research
-│   ├── reward-hacking-lab-executive.html   # dual-audience workshop lab
-│   ├── reward-hacking-lab.html             # original mock-up (reference)
+├── research/               # facilitator guide, market research, original mock-up
 │   ├── FACILITATOR_GUIDE_*.md              # 30-minute workshop guide
+│   ├── reward-hacking-lab.html             # original single-audience mock-up (reference)
 │   └── …                                   # handoff, transcript, vendor reviews (see research/README.md)
 ├── LICENSE
 └── README.md

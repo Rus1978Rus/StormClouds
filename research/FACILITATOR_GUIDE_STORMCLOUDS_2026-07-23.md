@@ -1,8 +1,9 @@
 # Reward Hacking Lab — 30-Minute Facilitator Guide
 
 **Part of the StormClouds "Reward Hacking Lab" workshop kit.**
-Pairs with the interactive lab: `reward-hacking-lab-executive.html` (open in any
-browser, zero install — run it in **Executive** mode for this session).
+Pairs with the interactive lab — the **site home** (`index.html` at the repo root,
+or the live demo at https://rus1978rus.github.io/StormClouds/ ). Open in any
+browser, zero install — run it in **Executive** mode for this session.
 
 - **Version:** 2026-07-23 · draft 1
 - **Audience:** executives, managers, product/ops leaders, L&D, AI-governance
@@ -48,8 +49,8 @@ regulatory mapping as a *bonus*, not the spine of the session — see §8.
 ## 3. Before the room (setup checklist)
 
 - [ ] Laptop + projector/large screen. Test the display ratio.
-- [ ] Open `reward-hacking-lab-executive.html` in a browser. Confirm it loads
-      offline (it's a single self-contained file — no network needed).
+- [ ] Open the lab in a browser — the site home (`index.html`) or the live demo.
+      Confirm it loads offline (it's a single self-contained file — no network needed).
 - [ ] Switch the **Audience** toggle (top-right) to **Executive**. Leave the
       preset on **Naive KPI**.
 - [ ] Have this guide open on a second device or printed.
