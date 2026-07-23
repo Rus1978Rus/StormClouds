@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='88'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<title>Reward Hacking Lab — готовый блок для семинара</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg0:#050a14; --bg1:#0b1524; --panel:#0c1626;
+    --ink:#eaf1fb; --muted:#93a4bf; --faint:#61748f;
+    --line:rgba(140,170,210,.14); --bolt:#ffd23f; --cyan:#55ceeb; --good:#7ee0a6;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--sans); color:var(--ink); line-height:1.5;
+    background:
+      radial-gradient(1100px 640px at 82% -12%, #1a2b46 0%, rgba(26,43,70,0) 60%),
+      radial-gradient(820px 560px at 8% 4%, #0f1d33 0%, rgba(15,29,51,0) 55%),
+      linear-gradient(180deg,var(--bg1) 0%,var(--bg0) 100%);
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:34px 22px 44px; display:flex; flex-direction:column; gap:34px}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+  .eyebrow .tag{color:#0a0f18; background:var(--bolt); border-radius:4px; padding:1px 7px; font-weight:700; margin-right:8px}
+
+  /* hero */
+  h1{margin:.3em 0 0; font-size:clamp(30px,6vw,52px); line-height:1.05; letter-spacing:-.02em; font-weight:850; text-wrap:balance}
+  h1 .zap{color:var(--bolt); text-shadow:0 0 22px rgba(255,210,63,.5)}
+  .sub{margin:0; font-size:clamp(16px,2.4vw,20px); color:var(--muted); max-width:34ch}
+  .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:6px}
+  .btn{
+    font:600 15px/1 var(--sans); text-decoration:none; border-radius:11px;
+    padding:14px 20px; display:inline-flex; align-items:center; gap:8px; transition:.15s; border:1px solid transparent;
+  }
+  .btn.primary{background:var(--bolt); color:#0a0f18}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .btn.ghost{color:var(--ink); border-color:var(--line); background:rgba(255,255,255,.03)}
+  .btn.ghost:hover{background:rgba(255,255,255,.08)}
+
+  /* shot */
+  .shot{border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--panel)}
+  .shot img{display:block; width:100%; height:auto}
+  .shot .cap{padding:10px 14px; font-family:var(--mono); font-size:12px; color:var(--faint); border-top:1px solid var(--line)}
+  .shot .cap b{color:var(--muted)}
+
+  /* rows of short points */
+  .three{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .three .c{border:1px solid var(--line); border-radius:14px; padding:16px; background:rgba(255,255,255,.02)}
+  .three .ic{font-size:24px}
+  .three .t{font-weight:700; margin-top:8px}
+  .three .d{color:var(--muted); font-size:14px; margin-top:3px}
+
+  .block h2{margin:0 0 4px; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--bolt); font-family:var(--mono)}
+  .lead{font-size:19px; margin:0}
+  .steps{margin:12px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; counter-reset:s}
+  .steps li{position:relative; padding-left:38px; font-size:16px}
+  .steps li::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:-2px; width:26px; height:26px; border-radius:8px; background:rgba(255,210,63,.14); color:#ffe6a0; font-family:var(--mono); font-weight:700; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,210,63,.3)}
+
+  .price{border:1px solid var(--line); border-radius:16px; padding:20px 22px; background:rgba(126,224,166,.05)}
+  .price .big{font-size:20px; font-weight:800}
+  .price .small{color:var(--muted); font-size:15px; margin-top:4px}
+
+  .final{text-align:center; border-top:1px solid var(--line); padding-top:30px; display:flex; flex-direction:column; gap:14px; align-items:center}
+  .final h2{margin:0; font-size:clamp(22px,4vw,32px); font-weight:800}
+  footer{color:var(--faint); font-size:13px; text-align:center; border-top:1px solid var(--line); padding-top:18px}
+  footer a{color:var(--muted)}
+  @media (max-width:640px){ .three{grid-template-columns:1fr} }
+</style>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="block" style="display:flex;flex-direction:column;gap:16px">
+    <div class="eyebrow"><span class="tag">Reward Hacking Lab</span> готовый блок для семинара</div>
+    <h1>Покажи команде за 5 минут, почему цифры <span class="zap">врут.</span></h1>
+    <p class="sub">На экране показатель лезет вверх, а реальная польза падает — вживую. Открыл и веди, готовиться не надо.</p>
+    <div class="cta">
+      <a class="btn primary" href="index.html">▶ Открыть демо бесплатно</a>
+      <a class="btn ghost" href="mailto:CHANGE-ME@example.com?subject=Reward%20Hacking%20Lab%20—%20пилот">Забронировать пилот</a>
+    </div>
+  </div>
+
+  <!-- WHAT THE ROOM SEES -->
+  <div class="shot">
+    <img src="assets/reward-hacking-lab.png" alt="То, что видит зал: показатель растёт до 93%, а реальная польза падает до 6%">
+    <div class="cap"><b>То, что видит зал.</b> Жёлтая линия — показатель. Синяя — реальная польза. Разрыв между ними и есть суть.</div>
+  </div>
+
+  <!-- 3 SHORT POINTS -->
+  <div class="three">
+    <div class="c"><div class="ic">⏱️</div><div class="t">30 минут, готово</div><div class="d">Открыл и ведёшь. Ноль подготовки.</div></div>
+    <div class="c"><div class="ic">💡</div><div class="t">Зал понимает сразу</div><div class="d">Не слайды — живой эффект на экране.</div></div>
+    <div class="c"><div class="ic">🌍</div><div class="t">Про любую профессию</div><div class="d">Цифры врут не только в коде: KPI, тесты, показатели.</div></div>
+  </div>
+
+  <!-- FOR WHOM -->
+  <div class="block">
+    <h2>Для кого</h2>
+    <p class="lead">Для тех, кто ведёт обучение: тренеры, консультанты, преподаватели, L&amp;D.</p>
+  </div>
+
+  <!-- HOW -->
+  <div class="block">
+    <h2>Как это работает</h2>
+    <ol class="steps">
+      <li>Открываешь страницу на экране.</li>
+      <li>Ведёшь 30 минут по готовой шпаргалке.</li>
+      <li>Зал уходит с мыслью «у нас же так же».</li>
+    </ol>
+  </div>
+
+  <!-- PRICE -->
+  <div class="price">
+    <div class="big">Попробовать и учить — бесплатно.</div>
+    <div class="small">Платно — только если ведёшь на этом коммерческие семинары: недорогая годовая лицензия (со своим логотипом и бумагой «обучение проведено»).</div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final">
+    <h2>Проведи первый семинар бесплатно.</h2>
+    <div class="cta" style="justify-content:center">
+      <a class="btn primary" href="index.html">▶ Открыть демо</a>
+      <a class="btn ghost" href="mailto:CHANGE-ME@example.com?subject=Reward%20Hacking%20Lab%20—%20пилот">Написать нам</a>
+    </div>
+  </div>
+
+  <footer>
+    StormClouds · Reward Hacking Lab — <a href="simulation.html">как это устроено под капотом</a>
+  </footer>
+</div>
