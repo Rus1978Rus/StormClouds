@@ -9,7 +9,7 @@ cloud-and-lightning simulation it grew out of.**
 ![License](https://img.shields.io/badge/license-7%25_royalty-3b82f6?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/vanilla_JS-zero_deps-2ea44f?style=for-the-badge)
 
-**▶ Try it live —** [**Reward Hacking Lab**](https://rus1978rus.github.io/StormClouds/) (the 30-min workshop demo, executive view — the site opens here) · [**StormClouds simulation**](https://rus1978rus.github.io/StormClouds/simulation.html) (the engine it grew from). No install, runs in the browser.
+**▶ Try it live —** [**Reward Hacking Lab**](https://rus1978rus.github.io/StormClouds/) (the 30-min workshop demo, executive view — the site opens here) · [**StormClouds simulation**](https://rus1978rus.github.io/StormClouds/simulation.html) (the engine it grew from) · [**one-page pitch**](https://rus1978rus.github.io/StormClouds/landing.html) (for facilitators). No install, runs in the browser.
 
 ![Reward Hacking Lab — the tracked KPI climbs to 93% while the real value it stood for collapses to 6%](assets/reward-hacking-lab.png)
 
