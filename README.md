@@ -151,7 +151,11 @@ StormLang.runProgram(['x = 5', 'print(x + 1)']);
   are pushed out. Selection uses the *average reward per appearance* (not the sum
   — otherwise merely frequent fragments win), and printing is valued above bare
   success. Replacement count shows as "🧬 Swaps" in the telemetry.
-- **↺ Reset** — clear the sky and the log · **Speed** — wind tempo
+- **🧪 Run 100** — run 100 strikes headlessly from a fixed seed and print the
+  summary (ran / printed / output-per-strike). Deterministic: same seed + same
+  toggles → identical numbers. Toggle Evolution and run again to see the metric
+  get gamed (survival climbs, useful output collapses) — repeatably.
+- **↺ Reset** — clear the sky and the log (re-seeds, so the run repeats) · **Speed** — wind tempo
 - **click the sky** — a new cloud there · **click a cloud** — re-roll its fragment
 
 Each line in the discharge log is tagged with the source cloud (`C1…Cn`).

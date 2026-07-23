@@ -12,6 +12,18 @@
 (function () {
   'use strict';
 
+  /* ---- seeded RNG (mulberry32) — makes runs reproducible ---- */
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const SEED = 1;
+  let rand = mulberry32(SEED);   // reassigned on Reset so the live run repeats
+
   /* ---- pool of fragments carried by clouds ---- */
   const POOL = [
     'x = 5', 'y = 3', 'n = 7', 'k = 2', 'bolt = 42', 'msg = "storm"',
@@ -21,8 +33,8 @@
     'for i in range(3): print(i)', 'for i in range(x): print(i)',
     'while k < 30: k = k + 7',
   ];
-  const pick = (a) => a[Math.floor(Math.random() * a.length)];
-  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = (a) => a[Math.floor(rand() * a.length)];
+  const rnd = (a, b) => a + rand() * (b - a);
 
   // "base" fragments — define a variable from a literal (no dependencies).
   // With coverage on, each is dealt to at least one starting cloud; otherwise
@@ -31,7 +43,7 @@
   const SEED_N = 9;
   const shuffle = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(rand() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
@@ -170,7 +182,7 @@
   function spark(x, y, color, count) {
     count = count || 14;
     for (let i = 0; i < count; i++) {
-      const a = Math.random() * Math.PI * 2, sp = rnd(0.6, 3);
+      const a = rand() * Math.PI * 2, sp = rnd(0.6, 3);
       particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, color: color || '#ffe07a' });
     }
   }
@@ -190,7 +202,7 @@
     }
     const branches = [];
     for (let i = 3; i < pts.length - 2; i += 4) {
-      if (Math.random() < 0.4) {
+      if (rand() < 0.4) {
         const p = pts[i];
         branches.push([{ x: p.x, y: p.y }, { x: p.x + rnd(-60, 60), y: p.y + rnd(20, 70) }]);
       }
@@ -318,7 +330,7 @@
     }
     if (best === worst || fit(best) <= fit(worst)) return; // nothing to learn from
     const before = worst.frag;
-    const mutated = Math.random() < MUT_RATE;
+    const mutated = rand() < MUT_RATE;
     worst.frag = mutated ? pick(POOL) : best.frag; // offspring of the best, or a mutation
     worst.fitScore = 0; worst.fitCount = 0;
     worst.el.querySelector('.chip').textContent = worst.frag;
@@ -455,11 +467,21 @@
     toast(evolution ? '🧬 evolution on — useful fragments outcompete useless ones' : '🧬 evolution off');
   });
   document.getElementById('btnReset').addEventListener('click', () => {
+    rand = mulberry32(SEED);   // restart the sequence so the run repeats
     buffer = []; charge = 0; strikes = 0; okLines = 0; particles = []; bolt = null; lastPair.clear();
     skyEnv = {}; replacements = 0;
     logEl.innerHTML = ''; logEl.appendChild(emptyEl); emptyEl.style.display = '';
     seed(); renderBuf(); renderSkyVars(); updateTelemetry();
-    toast('↺ sky reset');
+    toast('↺ sky reset (seed ' + SEED + ')');
+  });
+  document.getElementById('btnBatch').addEventListener('click', () => {
+    const r = runBatch({ strikes: 100, seed: SEED, memory, coverage, evolution });
+    const pct = (x) => Math.round(x * 100) + '%';
+    const cfg = [memory && 'memory', coverage && 'coverage', evolution && 'evolution'].filter(Boolean).join('+') || 'chaos';
+    const txt = '100 strikes · seed ' + r.seed + ' · ' + cfg + ' → ran ' + pct(r.okRate) +
+      ' · printed ' + pct(r.printRate) + ' · ' + r.outPerStrike.toFixed(2) + ' out/strike';
+    document.getElementById('batchOut').textContent = txt;
+    toast('🧪 ' + txt);
   });
   document.getElementById('spd').addEventListener('input', (e) => { speed = parseFloat(e.target.value); });
   sky.addEventListener('click', (e) => {
@@ -468,6 +490,65 @@
     toast('＋ ' + c.id + ' in the sky · carries ' + c.frag);
     updateTelemetry();
   });
+
+  /* ---- reproducible batch: run N strikes headlessly and summarize ----
+     Pure and DOM-free: given the same seed and the same toggles it returns the
+     exact same numbers, every time. This is what makes the effect repeatable
+     (and what the Lab's "seeded run" is). Toggle Evolution and run again to
+     watch selection lift the useful-output share. */
+  function runBatch(opts) {
+    const s0 = (opts.seed >>> 0) || 1;
+    const r = mulberry32(s0);
+    const pk = (a) => a[Math.floor(r() * a.length)];
+    let frags;
+    if (opts.coverage) {
+      frags = BASE.slice();
+      while (frags.length < SEED_N) frags.push(pk(POOL));
+      for (let i = frags.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [frags[i], frags[j]] = [frags[j], frags[i]]; }
+    } else {
+      frags = Array.from({ length: SEED_N }, () => pk(POOL));
+    }
+    const fitScore = frags.map(() => 0), fitCount = frags.map(() => 0);
+    const fit = (i) => (fitCount[i] ? fitScore[i] / fitCount[i] : 0);
+    let env = {}, okTotal = 0, lineTotal = 0, printStrikes = 0, outLines = 0;
+    const N = opts.strikes;
+    for (let s = 1; s <= N; s++) {
+      const bn = 2 + Math.floor(r() * (MAXBUF - 1));                 // fragments this strike
+      const idx = Array.from({ length: bn }, () => Math.floor(r() * frags.length));
+      const lines = idx.map((i) => frags[i]);
+      const res = StormLang.runProgram(lines, opts.memory ? env : {});
+      if (opts.memory) env = res.env;
+      okTotal += res.trace.filter((t) => t.ok).length;
+      lineTotal += lines.length;
+      if (res.out.length) { printStrikes++; outLines += res.out.length; }
+      if (opts.evolution) {
+        idx.forEach((i, k) => {
+          const t = res.trace[k];
+          const printed = t.ok && t.produced && t.produced.length;
+          fitScore[i] += printed ? 2 : (t.ok ? 1 : -1);
+          fitCount[i] += 1;
+        });
+        if (s % EVOLVE_EVERY === 0) {
+          let best = -1, worst = -1;
+          for (let i = 0; i < frags.length; i++) {
+            if (fitCount[i] === 0) continue;
+            if (best < 0 || fit(i) > fit(best)) best = i;
+            if (worst < 0 || fit(i) < fit(worst)) worst = i;
+          }
+          if (best >= 0 && worst >= 0 && best !== worst) {
+            frags[worst] = (r() < MUT_RATE) ? pk(POOL) : frags[best];
+            fitScore[worst] = 0; fitCount[worst] = 0;
+          }
+        }
+      }
+    }
+    return {
+      strikes: N, seed: s0,
+      okRate: lineTotal ? okTotal / lineTotal : 0,
+      printRate: printStrikes / N,
+      outPerStrike: outLines / N,
+    };
+  }
 
   /* ---- start ---- */
   new ResizeObserver(resize).observe(sky);
