@@ -2,6 +2,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='88'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Reward Hacking Lab — watch a KPI get gamed">
+<meta property="og:description" content="A zero-setup, in-browser lab that turns Goodhart's law into something a room can watch happen in 90 seconds.">
+<meta property="og:image" content="https://rus1978rus.github.io/StormClouds/assets/reward-hacking-lab.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rus1978rus.github.io/StormClouds/">
+<meta name="twitter:card" content="summary_large_image">
 <title>StormClouds · Reward Hacking Lab</title>
 <style>
   :root{
@@ -251,14 +257,26 @@
 
       <div class="meta">
         <b>What this is:</b> <span id="v-metaWhat">a zero‑setup, in‑browser lab that turns Goodhart’s law — “when a measure becomes a target, it stops being a good measure” — into something a room can watch happen. You can read it in any strategy book — you only <em>get</em> it when you watch it.</span> <br>
-        <b>Behind it:</b> the Foundation Layer — 100 structural patterns across 34 domains, 53 documented cases. <br>
-        <b>License:</b> free to teach; 7% royalty on paid workshops &amp; courses.
+        <b>Behind it:</b> a documented pattern library on measurement and proxy failure (the author’s Foundation Layer). <br>
+        <b>License:</b> free to teach and run internally. Commercial use (paid workshops, courses) — a simple fixed annual license; royalty only for white‑label / resale.
       </div>
     </aside>
   </main>
 
+  <section class="card" style="padding:20px 22px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 20px">
+    <div>
+      <div style="font-weight:800; font-size:20px; line-height:1.2">Run this in your next workshop.</div>
+      <div style="color:var(--muted); font-size:14px; margin-top:4px">Free to try. Book a 30‑minute pilot — I’ll help you set it up.</div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:10px">
+      <a href="https://t.me/Malyavsky1" target="_blank" rel="noopener" style="text-decoration:none; font:600 14px/1 var(--sans); background:var(--bolt); color:#0a0f18; padding:13px 18px; border-radius:10px">Book a free pilot</a>
+      <a href="mailto:malyavsky1@gmail.com?subject=Reward%20Hacking%20Lab%20—%20pilot" style="text-decoration:none; font:600 14px/1 var(--sans); color:var(--ink); border:1px solid var(--line); padding:13px 18px; border-radius:10px">Email</a>
+      <a href="https://github.com/Rus1978Rus/StormClouds/blob/main/research/FACILITATOR_GUIDE_STORMCLOUDS_2026-07-23.md" target="_blank" rel="noopener" style="text-decoration:none; font:600 14px/1 var(--sans); color:var(--ink); border:1px solid var(--line); padding:13px 18px; border-radius:10px">Facilitator guide</a>
+    </div>
+  </section>
+
   <footer>
-    <b>Preview note.</b> This is a mock‑up of the proposed product. The two lines are drawn from StormClouds’ own measured runs (naive vs. fixed reward: useful‑output share ~24% → ~7%, output/strike ~1.2 → ~0.7) — the “Executive” and “Technical” views are the <em>same</em> run under two vocabularies. It is a conceptual metaphor for how incentives drift, not a predictive model of any specific team or AI system. The shipped version plots a live run with fixed seeds so the effect is identical every time.
+    <b>Preview note.</b> This is a mock‑up of the proposed product. The two lines are illustrative; they follow StormClouds’ own measured runs, where a naive reward produces far less useful output than a fixed one (printing‑fragment share ~7% → ~24%, output per strike ~0.7 → ~1.2). The “Executive” and “Technical” views are the <em>same</em> run under two vocabularies. It is a conceptual metaphor for how incentives drift, not a predictive model of any specific team or AI system. A shipped version will plot a repeatable, seeded run so the effect is identical every time.
     <div style="margin-top:12px"><a href="simulation.html" style="color:#93a4bf;font-family:var(--mono);font-size:12.5px;text-decoration:none">▶ See how it’s built — the StormClouds code simulation →</a></div>
   </footer>
 </div>

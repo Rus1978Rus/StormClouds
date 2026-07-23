@@ -1,6 +1,6 @@
 /*
  * Tests for the StormLang mini-interpreter. No framework.
- * Run:  node stormclouds/tests/interpreter.test.js
+ * Run:  node interpreter.test.js
  */
 'use strict';
 
